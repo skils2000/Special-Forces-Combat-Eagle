@@ -34,20 +34,29 @@ anim.SetFloat("Speed", Mathf.Abs(move));
 }
 
 void Update(){
+   
 if (grounded && (Input.GetKeyDown (KeyCode.W))) {
 
 GetComponent<Rigidbody2D>().AddForce (new Vector2(0f,jumpForce));
 }
 GetComponent<Rigidbody2D>().velocity = new Vector2 (move * maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
 
-if (move > 0 && !facingRight)
+ /*if (move > 0 && !facingRight)
 Flip ();
 else if (move < 0 && facingRight)
-Flip ();
+Flip (); */
+Vector3 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+float rotateZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+if (difference.x > 0 && !facingRight)
+    Flip();
+else if (difference.x < 0 && facingRight)
+    Flip();
+
+/*if (Input.GetKey(KeyCode.A))
+    gameObject.GetComponent<Animator>().SetFloat("Speed", -1);*/
 
 
-
-/*if (Input.GetKey(KeyCode.Escape))
+if (Input.GetKey(KeyCode.Escape))
 {
 Application.Quit();
 }
@@ -55,15 +64,17 @@ Application.Quit();
 if (Input.GetKey(KeyCode.R))
 {
 Application.LoadLevel(Application.loadedLevel);
-}*/
+}
 
 
 }
 
 void Flip(){
+    
 facingRight = !facingRight;
 Vector3 theScale = transform.localScale;
 theScale.x *= -1;
 transform.localScale = theScale;
+     
 }
 }
