@@ -10,6 +10,7 @@ public class Rifle : MonoBehaviour
     public Transform shotDir;
     private float timeShot;
     public float startTime;
+    public AudioClip Fire;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +30,7 @@ public class Rifle : MonoBehaviour
             {
                 Instantiate(ammo, shotDir.position, transform.rotation);
                 timeShot = startTime;
+                GetComponent<AudioSource>().PlayOneShot(Fire);
             }
         }
         else
